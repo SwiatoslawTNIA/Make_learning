@@ -25,6 +25,8 @@ COMPILE.c=$(CFLAGS) $(OUTPUT_OPTION)
 	$(CXX) $(COMPILE.cc) $<
 	echo "created $@"
 #create rules:
+#Testing the default values of the env vars, then reset the global var here, and echo again:
+ifdef LOLLY
 .PHONY: run
 run: $(OUTPUT_FILES)
 	echo "Starting experiment:"
@@ -35,6 +37,31 @@ run: $(OUTPUT_FILES)
 	./hello
 	echo "Starting cpp:"
 	./cpp
+	echo
+	echo $(pwd)
+#The var above is not set locally, so it should have a global value
+	echo
+	echo "The new value of path(overwriting in makefile:)"
+	echo
+	echo $(PATH)
+#Change the value of the global var, 
+#Macro definitions:
+else
+	VAL1=2
+	VAL2=3
+	ifeq ($(VAL1), $(VAL2))
+		run:
+			echo "Sorry, no files"
+			echo "The make version: $(MAKE_VERSION)"
+			echo "The current working dir: $(CURDIR)"
+			echo "The files make has read: $(MAKEFILE_LIST)"
+			echo "Something: $(.VARIABLES)"
+			echo "YACC: $(YACC)"
+	else
+		run:
+			echo "Else nothing changes."
+	endif
+endif
 
 c2.o: c.h
 cpp.o:cpp.h
