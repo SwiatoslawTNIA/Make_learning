@@ -72,24 +72,25 @@ STR1 := c.c c1.h c1.c c2.h c3.h ...
 #miscellaneous functions:
 
 #A script to create a set of dirs if those don't exist:
-REQ_DIRS := 
-A := jolly
-B := A
-#To test all vars are defined:
-VARS := A B C D 
-$(foreach i,$(VARS), \
-	$(if $($i),,\
-	$(shell echo $i has not value > /dev/stderr)))
-#TO select all the *.c files:
-$(if $(filter $(MAKE_VERSION), 3.80 4.3),,\
-	$(error This makefile requires Makefile version 3.80))
-ALL_C_FILES :=$(wildcard *.cc */*.cc)
-Make_dirs:=	 $(shell for d in $(REQ_DIRS);\
-							do \
-								[[ -d $$d ]] || mkdir -p $$d; \
-							done)
+# REQ_DIRS := 
+# A := jolly
+# B := A
+# #To test all vars are defined:
+# VARS := A B C D 
+# $(foreach i,$(VARS), \
+# 	$(if $($i),,\
+# 	$(shell echo $i has not value > /dev/stderr)))
+# #TO select all the *.c files:
+# $(if $(filter $(MAKE_VERSION), 3.80 4.3),,\
+# 	$(error This makefile requires Makefile version 3.80))
+# ALL_C_FILES :=$(wildcard *.cc */*.cc)
+# Make_dirs:=	 $(shell for d in $(REQ_DIRS);\
+# 							do \
+# 								[[ -d $$d ]] || mkdir -p $$d; \
+# 							done)
 run:
 	@echo $($(B))
+	$(error You can't stop me!!!)
 	@echo $(sort $(STR1))
 	@echo "All files of .cc extension: $(ALL_C_FILES)"
 	$(Make_dirs)

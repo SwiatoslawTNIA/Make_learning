@@ -46,6 +46,8 @@ cpp: cpp.h
 cpp.o: cpp.h
 experiment: c.h 
 c2: c.h 
+.INTERMEDIATE : cpp.o
+
 #The rule below provides a sorted four column listing of the available make targets:
 .PHONY: help
 help:
@@ -62,4 +64,8 @@ $(PR) --omit-pagination --width=80 --columns=4\
 .PHONY: clean
 clean: #each time the clean is called, it executes it's commands, even if the file clean exists
 	rm -f *.o *.s hello cpp experiment c2
-
+#create a rule for generating dependencies:
+.PHONY: depend #Now the file will be updated each time it is called.
+depend: experiment.c c2.c hello.c
+	gcc -I headers -M $(CPPFLAGS) $^ > $@
+	more depend
